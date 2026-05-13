@@ -7,6 +7,8 @@ services:
       POSTGRES_PASSWORD: botmaker_pass
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U botmaker -d botmaker_db"]
       interval: 5s
@@ -21,6 +23,14 @@ services:
         condition: service_healthy
     ports:
       - "8000:8000"
+
+  metabase:
+    image: metabase/metabase:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
 
 volumes:
   postgres_data:
