@@ -25,6 +25,8 @@ cp .env.example .env
 
 Edit `.env`:
 
+Variables de botmaker: https://go.botmaker.com/#/api/
+
 | Variable | Description | Required |
 |---|---|---|
 | `BOTMAKER_ACCESS_TOKEN` | JWT access token from Botmaker dashboard | Yes |
