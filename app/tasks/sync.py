@@ -11,7 +11,7 @@ from app.services.data_ingestion import (
     upsert_channels,
 )
 
-FETCH_WINDOW_MINUTES = 4
+FETCH_WINDOW_MINUTES = 6
 logger = logging.getLogger(__name__)
 
 

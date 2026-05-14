@@ -2,16 +2,16 @@ from datetime import datetime, timezone
 
 from fastapi import APIRouter
 
-from app.tasks.scheduler import backfill_complete, scheduler
+import app.tasks.scheduler as scheduler_module
 
 router = APIRouter(tags=["health"])
 
 
 @router.get("/health")
 async def health():
+    sched = scheduler_module.scheduler
     return {
         "status": "ok",
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "backfill_complete": backfill_complete.is_set(),
-        "scheduler_running": scheduler is not None and scheduler.running,
+        "scheduler_running": sched is not None and sched.running,
     }

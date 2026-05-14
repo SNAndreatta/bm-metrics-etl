@@ -3,7 +3,6 @@ import logging
 from fastapi import APIRouter
 
 from app.tasks.backfill import run_backfill
-from app.tasks.scheduler import backfill_complete, scheduler
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/backfill", tags=["backfill"])
@@ -18,22 +17,14 @@ async def trigger_backfill():
         return {"status": "skipped", "message": "Backfill already running"}
 
     _backfill_running = True
-    backfill_complete.clear()
-
-    logger.info("Manual backfill triggered")
+    logger.info("Manual corrective re-sync triggered")
     try:
         await run_backfill()
-        backfill_complete.set()
-        if scheduler and not scheduler.running:
-            scheduler.start()
-        return {"status": "completed", "message": "Backfill finished"}
+        return {"status": "completed", "message": "Corrective re-sync finished"}
     finally:
         _backfill_running = False
 
 
 @router.get("/status")
 async def backfill_status():
-    return {
-        "running": _backfill_running,
-        "completed": backfill_complete.is_set(),
-    }
+    return {"running": _backfill_running}
