@@ -20,6 +20,7 @@ python-dateutil = "^2.9"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3"
 pytest-asyncio = "^0.25"
+aiosqlite = "^0.22.1"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

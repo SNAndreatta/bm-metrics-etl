@@ -66,7 +66,7 @@ async def upsert_agent_metrics(db: AsyncSession, items: list[dict[str, Any]], se
     
     # If session_status is "closed", mark all records with these session_ids as closed
     if session_status == "closed":
-        session_ids = [item.get("session_id") for item in items if item.get("session_id")]
+        session_ids = [item.get("sessionId") for item in items if item.get("sessionId")]
         if session_ids:
             stmt = text(
                 f"UPDATE agent_metrics SET is_session_opened = FALSE WHERE session_id = ANY(:session_ids)"
