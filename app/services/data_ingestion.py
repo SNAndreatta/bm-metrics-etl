@@ -61,10 +61,22 @@ async def upsert_channels(db: AsyncSession, items: list[dict[str, Any]]) -> int:
     return count
 
 
-async def upsert_agent_metrics(db: AsyncSession, items: list[dict[str, Any]]) -> int:
+async def upsert_agent_metrics(db: AsyncSession, items: list[dict[str, Any]], session_status: str = "open") -> int:
     count = 0
+    
+    # If session_status is "closed", mark all records with these session_ids as closed
+    if session_status == "closed":
+        session_ids = [item.get("session_id") for item in items if item.get("session_id")]
+        if session_ids:
+            stmt = text(
+                f"UPDATE agent_metrics SET is_session_opened = FALSE WHERE session_id = ANY(:session_ids)"
+            )
+            await db.execute(stmt, {"session_ids": session_ids})
+            await db.commit()
+    
+    # Upsert each metric record with the appropriate session_status
     for item in items:
-        values = map_agent_metric(item)
+        values = map_agent_metric(item, session_status=session_status)
         stmt = pg_insert(AgentMetric).values(**values).on_conflict_do_update(
             index_elements=["session_id", "agent_id"],
             set_={

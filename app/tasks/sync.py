@@ -34,8 +34,15 @@ async def sync_all_endpoints() -> None:
         channel_count = await upsert_channels(db, channels_raw)
         logger.info("Synced %s channels", channel_count)
 
-        metric_count = await upsert_agent_metrics(db, metrics_raw)
-        logger.info("Synced %s agent metrics", metric_count)
+        # Upsert open sessions
+        if metrics_open:
+            metric_count_open = await upsert_agent_metrics(db, metrics_open, session_status="open")
+            logger.info("Synced %s open agent metrics", metric_count_open)
+        
+        # Upsert closed sessions (this will also mark all related sessions as closed)
+        if metrics_closed:
+            metric_count_closed = await upsert_agent_metrics(db, metrics_closed, session_status="closed")
+            logger.info("Synced %s closed agent metrics", metric_count_closed)
 
         perf_count = await insert_agent_performance_snapshots(db, perf_raw)
         logger.info("Synced %s agent performance snapshots", perf_count)

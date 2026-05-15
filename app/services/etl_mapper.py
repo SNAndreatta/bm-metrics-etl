@@ -65,7 +65,7 @@ def map_agent_performance(item: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def map_agent_metric(item: dict[str, Any]) -> dict[str, Any]:
+def map_agent_metric(item: dict[str, Any], session_status: str = "open") -> dict[str, Any]:
     return {
         "session_id": item.get("sessionId"),
         "chat_id": item.get("chatId"),
@@ -95,6 +95,7 @@ def map_agent_metric(item: dict[str, Any]) -> dict[str, Any]:
         "agent_active_duration_to_close": _safe_float(item.get("fromOpAssignationToSessionClosed")),
         "created_at": _parse_dt(item.get("sessionCreationTime")),
         "closed_at": _parse_dt(item.get("closedTime")),
+        "is_session_opened": session_status == "open",
         "last_updated_at": datetime.now(timezone.utc),
         "raw_json": item,
     }

@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 
 from sqlalchemy import (
     BigInteger,
+    Boolean,
     Column,
     DateTime,
     Float,
@@ -50,6 +51,7 @@ class AgentMetric(Base):
 
     created_at = Column(DateTime(timezone=True), nullable=True)
     closed_at = Column(DateTime(timezone=True), nullable=True)
+    is_session_open = Column(Boolean, nullable=False)
     last_updated_at = Column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
