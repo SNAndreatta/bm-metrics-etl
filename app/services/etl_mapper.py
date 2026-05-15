@@ -37,7 +37,6 @@ def map_agent(item: dict[str, Any]) -> dict[str, Any]:
         "email": item.get("email"),
         "role": item.get("role"),
         "queues": item.get("queues") or [],
-        "raw_json": item,
     }
 
 
@@ -47,7 +46,6 @@ def map_channel(item: dict[str, Any]) -> dict[str, Any]:
         "name": item.get("name"),
         "platform": item.get("platform"),
         "active": item.get("active", False),
-        "raw_json": item,
     }
 
 
@@ -61,7 +59,6 @@ def map_agent_performance(item: dict[str, Any]) -> dict[str, Any]:
         "checkin": _parse_dt(item.get("checkin")),
         "checkout": _parse_dt(item.get("checkout")),
         "captured_at": datetime.now(timezone.utc),
-        "raw_json": item,
     }
 
 
@@ -95,7 +92,6 @@ def map_agent_metric(item: dict[str, Any], session_status: str = "open") -> dict
         "agent_active_duration_to_close": _safe_float(item.get("fromOpAssignationToSessionClosed")),
         "created_at": _parse_dt(item.get("sessionCreationTime")),
         "closed_at": _parse_dt(item.get("closedTime")),
-        "is_session_opened": session_status == "open",
+        "is_session_open": session_status == "open",
         "last_updated_at": datetime.now(timezone.utc),
-        "raw_json": item,
     }

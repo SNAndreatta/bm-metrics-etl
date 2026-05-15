@@ -23,7 +23,6 @@ class TestMapAgent:
         assert result["email"] == "alice@example.com"
         assert result["role"] == "ADMIN"
         assert result["queues"] == ["sales", "support"]
-        assert result["raw_json"] is raw
 
     def test_missing_fields(self):
         raw = {"id": "ag_456"}

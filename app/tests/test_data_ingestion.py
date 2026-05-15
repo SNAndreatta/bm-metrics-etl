@@ -16,7 +16,7 @@ class TestMapAgentMetricSessionStatus:
             "openSessions": "1",
         }
         result = map_agent_metric(raw, session_status="open")
-        assert result["is_session_opened"] is True
+        assert result["is_session_open"] is True
     
     def test_maps_is_session_opened_false_for_closed_status(self):
         raw = {
@@ -26,7 +26,7 @@ class TestMapAgentMetricSessionStatus:
             "closedSessions": "1",
         }
         result = map_agent_metric(raw, session_status="closed")
-        assert result["is_session_opened"] is False
+        assert result["is_session_open"] is False
     
     def test_defaults_to_open_status(self):
         raw = {
@@ -34,7 +34,7 @@ class TestMapAgentMetricSessionStatus:
             "agentId": "ag_1",
         }
         result = map_agent_metric(raw)  # No session_status provided
-        assert result["is_session_opened"] is True
+        assert result["is_session_open"] is True
 
 
 class TestUpsertAgentMetricsBasicUpsert:
@@ -161,7 +161,7 @@ class TestMapAgentMetricSessionStatusTransitions:
         }
         result = map_agent_metric(raw, session_status="open")
         
-        assert result["is_session_opened"] is True
+        assert result["is_session_open"] is True
         assert result["openSessions"] == 5
         assert result["closedSessions"] == 0
         assert result["total_agent_responses"] == 12
@@ -180,7 +180,7 @@ class TestMapAgentMetricSessionStatusTransitions:
         }
         result = map_agent_metric(raw, session_status="closed")
         
-        assert result["is_session_opened"] is False
+        assert result["is_session_open"] is False
         assert result["closedSessions"] == 1
         assert result["total_agent_responses"] == 8
         assert result["closed_at"] is not None

@@ -3,7 +3,8 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from app.api.backfill import router as backfill_router
+import app.models  # noqa: F401
+
 from app.api.health import router as health_router
 from app.core.database import Base, engine
 from app.tasks.scheduler import (
@@ -19,6 +20,7 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Creating database tables...")
+    logger.info(Base.metadata.tables.keys())
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
@@ -36,4 +38,3 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Botmaker Orchestrator", lifespan=lifespan)
 
 app.include_router(health_router)
-app.include_router(backfill_router)

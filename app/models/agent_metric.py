@@ -11,7 +11,6 @@ from sqlalchemy import (
     String,
     UniqueConstraint,
 )
-from sqlalchemy.dialects.postgresql import JSONB
 
 from app.core.database import Base
 
@@ -57,7 +56,6 @@ class AgentMetric(Base):
         default=lambda: datetime.now(timezone.utc),
         onupdate=lambda: datetime.now(timezone.utc),
     )
-    raw_json = Column(JSONB, nullable=True)
 
     __table_args__ = (
         UniqueConstraint("session_id", "agent_id", name="uq_session_agent"),

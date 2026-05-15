@@ -31,7 +31,6 @@ async def upsert_agents(db: AsyncSession, items: list[dict[str, Any]]) -> int:
                 "email": values["email"],
                 "role": values["role"],
                 "queues": values["queues"],
-                "raw_json": values["raw_json"],
                 "updated_at": text("NOW()"),
             },
         )
@@ -51,7 +50,6 @@ async def upsert_channels(db: AsyncSession, items: list[dict[str, Any]]) -> int:
                 "name": values["name"],
                 "platform": values["platform"],
                 "active": values["active"],
-                "raw_json": values["raw_json"],
                 "updated_at": text("NOW()"),
             },
         )
@@ -69,7 +67,7 @@ async def upsert_agent_metrics(db: AsyncSession, items: list[dict[str, Any]], se
         session_ids = [item.get("sessionId") for item in items if item.get("sessionId")]
         if session_ids:
             stmt = text(
-                f"UPDATE agent_metrics SET is_session_opened = FALSE WHERE session_id = ANY(:session_ids)"
+                f"UPDATE agent_metrics SET is_session_open = FALSE WHERE session_id = ANY(:session_ids)"
             )
             await db.execute(stmt, {"session_ids": session_ids})
             await db.commit()

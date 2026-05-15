@@ -1,7 +1,6 @@
 from datetime import datetime, timezone
 
 from sqlalchemy import ARRAY, BigInteger, Column, DateTime, Index, String
-from sqlalchemy.dialects.postgresql import JSONB
 
 from app.core.database import Base
 
@@ -22,7 +21,6 @@ class AgentPerformanceSnapshot(Base):
         index=True,
         default=lambda: datetime.now(timezone.utc),
     )
-    raw_json = Column(JSONB, nullable=True)
 
     __table_args__ = (
         Index("ix_perf_agent_captured", "agent_email", "captured_at"),
