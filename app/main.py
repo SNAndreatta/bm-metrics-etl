@@ -19,18 +19,13 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Creating database tables...")
-    logger.info(Base.metadata.tables.keys())
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
     sched = setup_scheduler()
     start_sync_job()
     sched.start()
     logger.info("Scheduler started")
-
+    
     yield
-
+    
     shutdown_scheduler()
     await engine.dispose()
 
