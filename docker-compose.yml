@@ -25,13 +25,5 @@ services:
       - "8000:8000"
     command: /app/start.sh
 
-  metabase:
-    image: metabase/metabase:latest
-    depends_on:
-      db:
-        condition: service_healthy
-    ports:
-      - "3000:3000"
-
 volumes:
   postgres_data:

@@ -152,11 +152,12 @@ class BotmakerClient:
     async def _paginated_get(
         self, path: str, params: dict[str, Any] | None = None
     ) -> AsyncGenerator[list[dict[str, Any]], None]:
-        params = dict(params or {})
+        current_path = path
+        current_params = params
         page_count = 0
 
         while True:
-            data = await self._request("GET", path, params=params)
+            data = await self._request("GET", current_path, params=current_params)
             items = data.get("items", data) if isinstance(data, dict) else data
 
             if isinstance(items, list):
@@ -170,7 +171,9 @@ class BotmakerClient:
             next_page = data.get("nextPage") if isinstance(data, dict) else None
             if not next_page:
                 break
-            params = {**(params or {}), "nextPage": next_page}
+            
+            current_path = next_page
+            current_params = None
 
     async def list_agents(self) -> list[dict[str, Any]]:
         all_items: list[dict[str, Any]] = []
