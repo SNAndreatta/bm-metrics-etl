@@ -11,7 +11,7 @@ ETL pipeline que extrae métricas desde la API de Botmaker v2.0, las transforma 
 ### 1. Variables de entorno
 
 ```bash
-cp .env.example .env
+cp .env.template .env
 ```
 
 Editar `.env`:
