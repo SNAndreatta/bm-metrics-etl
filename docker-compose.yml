@@ -18,7 +18,7 @@ services:
   metabase:
     image: metabase/metabase:latest
     ports:
-      - "3000:3000"
+      - "${METABASE_PORT}:${METABASE_PORT}"
     environment:
       MB_DB_TYPE: Postgres
       MB_DB_DBNAME: ${POSTGRES_DB}
@@ -30,6 +30,17 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  api:
+    build: .
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    command: /app/start.sh
+
 
 volumes:
   postgres_data:
