@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 
 from sqlalchemy import ARRAY, BigInteger, Column, DateTime, Index, String
 
+from app.core.config import settings
 from app.core.database import Base
 
 
@@ -24,4 +25,5 @@ class AgentPerformanceSnapshot(Base):
 
     __table_args__ = (
         Index("ix_perf_agent_captured", "agent_email", "captured_at"),
+        {"schema": settings.database_schema},
     )

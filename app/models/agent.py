@@ -2,11 +2,14 @@ from datetime import datetime, timezone
 
 from sqlalchemy import ARRAY, Column, DateTime, String
 
+from app.core.config import settings
 from app.core.database import Base
 
 
 class Agent(Base):
     __tablename__ = "agents"
+    __table_args__ = {"schema": settings.database_schema}
+
 
     id = Column(String, primary_key=True)
     name = Column(String, nullable=True)

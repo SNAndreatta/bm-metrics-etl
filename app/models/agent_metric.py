@@ -12,6 +12,7 @@ from sqlalchemy import (
     UniqueConstraint,
 )
 
+from app.core.config import settings
 from app.core.database import Base
 
 
@@ -59,4 +60,5 @@ class AgentMetric(Base):
 
     __table_args__ = (
         UniqueConstraint("session_id", "agent_id", name="uq_session_agent"),
+        {"schema": settings.database_schema},
     )

@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from sqlalchemy import DateTime, String, func
 from sqlalchemy.orm import Mapped, mapped_column
 
+from app.core.config import settings
 from app.core.database import Base
 
 
@@ -10,6 +11,8 @@ class SyncMetadata(Base):
     """Stores sync tracking metadata like last sync timestamp."""
     
     __tablename__ = "sync_metadata"
+    __table_args__ = {"schema": settings.database_schema}
+
     
     key: Mapped[str] = mapped_column(String(255), primary_key=True)
     value: Mapped[str] = mapped_column(String(2048))
