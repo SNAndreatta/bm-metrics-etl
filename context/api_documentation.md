@@ -1,15 +1,22 @@
+
 # Botmaker API endpoints documentation
+
 ## List Agents
+
 List all agents with access to the bot.
-### URL: https://api.botmaker.com/v2.0/agents
+
+### URL: <https://api.botmaker.com/v2.0/agents>
+
 ### Query parameters
+
 - emails (array[string])
-    - Fetch agents by email. A list of emails can be used, separated by comma or repeating the emails query param.
+  - Fetch agents by email. A list of emails can be used, separated by comma or repeating the emails query param.
 - online (boolean)
-    - Filter online agents with true. Use false to filter the offline users.
+  - Filter online agents with true. Use false to filter the offline users.
 
 ### Response example
-```
+
+``` json
 {
   "nextPage": "string",
   "items": [
@@ -41,15 +48,19 @@ List all agents with access to the bot.
 ```
 
 ## List channels
-### URL: https://api.botmaker.com/v2.0/channels
+
+### URL: <https://api.botmaker.com/v2.0/channels>
+
 ### Query parameters
+
 - active (boolean)
-    - Filter only active channels.
+  - Filter only active channels.
 - platform (string)
-    - Fetch channels from platform only.
+  - Fetch channels from platform only.
 
 ### Response example
-```
+
+``` json
 {
   "items": [
     {
@@ -64,6 +75,7 @@ List all agents with access to the bot.
 ```
 
 ## List Agents Performance
+
 Retrieve Agents Performance (as in Agent Performance page). By default, it retrieves today metrics.You can filter by:
 
     Specific range of time
@@ -72,18 +84,20 @@ Retrieve Agents Performance (as in Agent Performance page). By default, it retri
     Specific agent
     Specific role
 
+### URL: <https://api.botmaker.com/v2.0/dashboards/agent-performance>
 
-### URL: https://api.botmaker.com/v2.0/dashboards/agent-performance
 ### Query parameters
+
 - from (string date-time)
-    - Min datetime. It not sent, it will default to the last hour.
-    - Examples: 2021-01-01T00:00:00.000Z
+  - Min datetime. It not sent, it will default to the last hour.
+  - Examples: 2021-01-01T00:00:00.000Z
 - to (string date-time)
-    - Max datetime. Requires "from"
-    - Examples: 2022-01-05T12:30:42.000Z
+  - Max datetime. Requires "from"
+  - Examples: 2022-01-05T12:30:42.000Z
 
 ### Response example
-```
+
+``` json
 {
   "nextPage": "string",
   "items": [
@@ -105,8 +119,8 @@ Retrieve Agents Performance (as in Agent Performance page). By default, it retri
 ```
 
 ## List Agents Metrics
-List agents metrics by conversation (as in Agent Metrics page). By default, it retrieves today metrics.You can filter by:
 
+List agents metrics by conversation (as in Agent Metrics page). By default, it retrieves today metrics.You can filter by:
     Specific range of time
     List of Channel IDs
     List of Agent IDs
@@ -114,8 +128,10 @@ List agents metrics by conversation (as in Agent Metrics page). By default, it r
     Agent Online Status
     Session Status (open, closed, both)
 
-### URL: https://api.botmaker.com/v2.0/dashboards/agent-metrics
+### URL: <https://api.botmaker.com/v2.0/dashboards/agent-metrics>
+
 ### Query parameters
+
 session-status
 string
 required
@@ -136,7 +152,7 @@ Required to filter metrics by channel id.
 Examples:
 botproject-whatsapp-5491147038***5491147038***5125186904100***
 from
-string<date-time>
+string date-time
 
 Min datetime. It not sent, it will default to the last hour.
 Examples:
@@ -154,14 +170,15 @@ A list of queues to filter with.
 Examples:
 ["ABC123DEF456GHI789JK","ABC123DEF456GHI789JK"]
 to
-string<date-time>
+string date-time
 
 Max datetime. Requires "from"
 Examples:
 2022-01-05T12:30:42.000Z
 
 ### Response example
-```
+
+``` json
 {
   "nextPage": "string",
   "items": [
@@ -202,18 +219,24 @@ Examples:
 ```
 
 (This one should not be necessary, but it is documented just in case)
+
 ## List Sessions
+
 List sessions in a period, sorted by start datetime. For each session, you can fetch its messages, final variables ,events and AI analysis by passing include-messages, include-variables, include-events, include-ai-analysis. Each one of these will increase your BI data sources costs.
 This endpoint will increase your BI data sources costs, so use it with care (save the response to avoid retrieving the same period every time).
-### URL: https://api.botmaker.com/v2.0/sessions
+
+### URL: <https://api.botmaker.com/v2.0/sessions>
+
 ### Query parameters
+
 - emails (array[string])
-    - Fetch agents by email. A list of emails can be used, separated by comma or repeating the emails query param.
+  - Fetch agents by email. A list of emails can be used, separated by comma or repeating the emails query param.
 - online (boolean)
-    - Filter online agents with true. Use false to filter the offline users.
+  - Filter online agents with true. Use false to filter the offline users.
 
 ### Response example
-```
+
+``` json
 {
   "nextPage": "string",
   "items": [

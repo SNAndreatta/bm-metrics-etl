@@ -5,9 +5,10 @@ ETL pipeline que extrae métricas desde la API de Botmaker v2.0, las transforma 
 ## Requisitos
 
 - Docker y Docker Compose
-- Credenciales de API de Botmaker (https://go.botmaker.com/#/api/)
+- Credenciales de API de Botmaker <https://go.botmaker.com/#/api/>
 
 ## Configuración y ejecución
+
 ### 1. Variables de entorno
 
 ```bash
@@ -17,7 +18,7 @@ cp .env.template .env
 Editar `.env`:
 
 | Variable | Descripción | Requerida |
-|---|---|---|
+| --- | --- | --- |
 | `BOTMAKER_ACCESS_TOKEN` | Token JWT de acceso | Sí |
 | `CLIENT_ID` | Client ID de Botmaker (ej. `telviso`) | Sí |
 | `SECRET_ID` | Secret ID de Botmaker | Sí |
@@ -30,13 +31,14 @@ Editar `.env`:
 Se pueden configurar los puertos tanto de la API como de la base de datos PostgreSQL en el **_docker-compose.yml_**.
 
 Para correr todo ejecuta en la terminal:
+
 ```bash
 docker compose up -d --build
 ```
 
 Esto inicia:
-- `api` — Aplicación FastAPI con el ETL
-- `db` — PostgreSQL 16
+    - `api` — Aplicación FastAPI con el ETL
+    - `db` — PostgreSQL 16
 
 ### 3. Verificar estado
 
@@ -47,14 +49,13 @@ curl http://host:puerto/health
 ## Endpoints de la API
 
 | Método | Ruta | Descripción |
-|---|---|---|
+| --- | --- | --- |
 | `GET` | `/health` | Health check + estado del scheduler |
-
 
 ## Modelo de Base de Datos
 
 | Tabla | Descripción | Clave |
-|---|---|---|
+| --- | --- | --- |
 | `agents` | Agentes de Botmaker | `id` (PK) |
 | `channels` | Canales de comunicación | `id` (PK) |
 | `queues` | Colas extraídas de los agentes (no hay un endpoint que las otorgue directamente) | `name` (PK) |
@@ -62,8 +63,8 @@ curl http://host:puerto/health
 | `agent_performance_snapshots` | Instantáneas de estado de agente (serie temporal) | auto-incremental, append-only |
 | `sync_metadata` | Metadatos de sincronización (timestamps) | `key` (PK) |
 
-
 (de acá para abajo no es necesario usar ni saber nada de lo que dice, a no ser que quieran hacer cambios a la base de datos y necesiten hacer migraciones)
+
 ## Migraciones con Alembic
 
 El proyecto usa Alembic para gestionar cambios en el esquema de base de datos.

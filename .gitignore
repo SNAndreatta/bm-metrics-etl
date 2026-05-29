@@ -7,3 +7,4 @@ __pycache__/
 *.db
 *.sql
 postgres_data/
+*.jsonc
